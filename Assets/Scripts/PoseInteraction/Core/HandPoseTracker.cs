@@ -67,6 +67,10 @@ namespace PoseInteraction.Core
         private int _imageWidth;
         private int _imageHeight;
 
+        // Current landmarks (for external access)
+        private System.Collections.Generic.List<Mediapipe.Tasks.Components.Containers.NormalizedLandmark> _currentLandmarks;
+        public System.Collections.Generic.IReadOnlyList<Mediapipe.Tasks.Components.Containers.NormalizedLandmark> CurrentLandmarks => _currentLandmarks;
+
         // Debug
         private bool _firstFrame = true;
 
@@ -120,6 +124,7 @@ namespace PoseInteraction.Core
             // Validate result
             if (result.poseLandmarks == null || result.poseLandmarks.Count == 0)
             {
+                _currentLandmarks = null;
                 return;
             }
 
@@ -164,6 +169,9 @@ namespace PoseInteraction.Core
                     landmarkList.Add(landmark);
                 }
             }
+
+            // Store current landmarks for external access (e.g., BodyPartVisualizer)
+            _currentLandmarks = landmarkList;
 
             // Track right hand
             if (config.trackRightHand && landmarkList.Count > GetRightHandIndex())

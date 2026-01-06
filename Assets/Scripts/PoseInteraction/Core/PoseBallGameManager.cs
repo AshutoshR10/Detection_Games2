@@ -19,6 +19,9 @@ namespace PoseInteraction.Core
         [Header("Core Components")]
         [SerializeField] private HandPoseTracker handPoseTracker;
 
+        // Public accessor for external components (e.g., UI)
+        public HandPoseTracker HandPoseTracker => handPoseTracker;
+
         [Header("Ball References")]
         [SerializeField] private List<PhysicsBallInteraction> balls = new List<PhysicsBallInteraction>();
 
